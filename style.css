@@ -1,0 +1,318 @@
+/* ======== VARIÁVEIS E ESTILOS GLOBAIS ======== */
+:root{
+  --gold:#E7A94F;
+  --black:#000000;
+  --dark-gray:#1a1a1a;
+  --light-gray:#cccccc;
+  --white:#ffffff;
+  --font-main:'Montserrat',sans-serif;
+
+  /* altura da top bar (se usar) */
+  --topbar-h:36px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background-color:var(--black);
+  font-family:var(--font-main);
+  color:var(--white);
+  /* se estiver usando a TOP BAR fixa, deixe a linha abaixo; senão, remova */
+  padding-top:var(--topbar-h);
+}
+main{display:block;width:100%}
+
+/* ======== LOADER ======== */
+.loader-wrap{
+  position:fixed; inset:0; z-index:10000;
+  display:grid; place-items:center;
+  background:var(--black);
+  opacity:1; transition:opacity .4s ease, visibility .4s ease;
+  visibility:visible;
+}
+.loader-wrap.fade-out{opacity:0; pointer-events:none; visibility:hidden}
+.loader-inner{text-align:center; width:fit-content}
+.loader-logo img{
+  width:150px; height:150px; object-fit:contain; animation:fadeIn .8s ease-out forwards;
+}
+.loader-bar{
+  position:relative; width:150px; height:6px; margin:8px auto 0;
+  border-radius:999px; background:rgba(255,255,255,.15); overflow:hidden;
+}
+.loader-fill{
+  position:absolute; inset:0; background:var(--gold);
+  transform-origin:left; transform:scaleX(0); animation:fillLtoR 2.5s ease-in-out forwards;
+}
+.loader-text{margin-top:10px; color:rgba(255,255,255,.85); animation:fadeIn .8s ease-out forwards}
+@keyframes fillLtoR{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:translateY(0)}}
+
+/* ======== BOTÃO CTA (shine otimizado) ======== */
+.cta-button{
+  background-color:var(--gold); color:var(--black);
+  padding:15px 40px; border-radius:8px; text-decoration:none;
+  font-weight:700; font-size:1.1rem; border:none; cursor:pointer;
+  display:inline-block; margin-top:20px; position:relative; overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+  box-shadow:0 0 10px rgba(231,169,79,.3);
+  filter:brightness(1);
+  will-change:transform;
+}
+/* shine único (desktop+mobile) */
+.cta-button::before{
+  content:''; position:absolute; top:0; bottom:0; left:0; width:50%;
+  background:linear-gradient(to right, transparent, rgba(255,255,255,.4), transparent);
+  transform:translateX(-75%) skewX(-20deg);
+  animation:moveLight 2.4s linear infinite;
+  pointer-events:none; opacity:.85;
+  will-change:transform, opacity;
+}
+.cta-button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 25px rgba(231,169,79,.7);
+  filter:brightness(1.08);
+}
+@keyframes moveLight{
+  0%{transform:translateX(-75%) skewX(-20deg)}
+  100%{transform:translateX(125%) skewX(-20deg)}
+}
+
+/* ======== SEÇÃO HERO (Topo) ======== */
+.hero{
+  position:relative; width:100%; min-height:110vh;
+  display:flex; align-items:center;
+  padding:100px 8% 100px 16%;
+  background-image:url('img/bg-desktop.jpg');
+  background-size:cover; background-position:center center; background-repeat:no-repeat;
+}
+.hero-logo{max-width:300px; height:auto; margin-bottom:25px}
+.hero-image-mobile{display:none}
+.hero-content{
+  position:relative; z-index:2; max-width:600px; padding-left:0; margin-top:0; text-align:left;
+}
+.hero-content .hero-headline{
+  font-size:2.2rem; color:var(--white); font-weight:700; margin-bottom:16px; text-transform:uppercase;
+}
+.hero-content .hero-description{
+  font-size:1rem; color:var(--light-gray); line-height:1.6; margin-bottom:13px; max-width:450px;
+}
+
+/* ===== Retângulo (data + local) — compacto e alinhado ===== */
+.hero-info{
+  display:inline-flex; align-items:center; justify-content:flex-start;
+  gap:12px; padding:8px 14px; border:.8px solid var(--gold); border-radius:8px;
+  background:transparent; width:auto; max-width:100%; margin-bottom:0; vertical-align:middle;
+}
+.hero-info .info-item{display:inline-flex; align-items:center; gap:4px}
+.hero-info .info-icon{width:18px; height:18px; color:var(--gold); flex:0 0 18px}
+.hero-info .info-icon path{fill:currentColor}
+.hero-info .info-item span{font-size:.95rem; color:var(--white); font-weight:500}
+
+/* ===== SEÇÃO MIOLO (Placeholder) ======== */
+.placeholder-section{width:100%; height:500px; padding:50px 8%; background-color:#050505}
+
+/* ======== RODAPÉ ======== */
+.footer{
+  width:100%; background-color:var(--dark-gray);
+  padding:40px 8% 30px; text-align:center; border-top:1px solid #222;
+}
+.footer-container{max-width:1200px; margin:0 auto}
+.back-to-top{display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--gold); font-weight:500; margin-bottom:30px; transition:opacity .3s}
+.back-to-top svg{width:20px; height:20px; fill:var(--gold)}
+.back-to-top:hover{opacity:.8}
+.footer-logo{font-size:1.5rem; font-weight:700; color:var(--white); margin-bottom:15px}
+.footer-logo .mentor-text{color:var(--gold); font-weight:400; font-style:italic}
+.social-links{margin-bottom:25px}
+.social-link{display:inline-block; margin:0 12px; transition:transform .3s}
+.social-link svg{width:28px; height:28px; fill:var(--light-gray); transition:fill .3s}
+.social-link:hover svg{fill:var(--gold)}
+.social-link:hover{transform:translateY(-3px)}
+.copyright{color:var(--light-gray); font-size:.9rem; opacity:.7}
+
+/* ======== TOP BAR (opcional) ======== */
+.top-bar{
+  position:fixed; top:0; left:0; width:100%; height:var(--topbar-h);
+  background:var(--gold); z-index:9999; overflow:hidden;
+}
+.top-bar::before{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(to left, transparent, rgba(255,255,255,.35), transparent);
+  transform:skewX(-20deg) translateX(110%); animation:topbarShine 2.2s linear infinite; pointer-events:none; opacity:.9;
+}
+.top-bar-track{display:flex; width:max-content; height:100%; animation:marqueeLeft 20s linear infinite}
+.top-bar-segment{white-space:nowrap; padding:0 24px; height:100%; display:flex; align-items:center; font-weight:700; font-size:.95rem; letter-spacing:.4px; color:var(--black)}
+@keyframes marqueeLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes topbarShine{0%{transform:skewX(-20deg) translateX(110%)}100%{transform:skewX(-20deg) translateX(-110%)}}
+
+/* ======== SEÇÃO DE CHAMADA (Join Section) ======== */
+.join-section{
+  width:100%; background-color:#000;
+  display:flex; justify-content:center; align-items:center;
+}
+.join-container{
+  text-align:center; display:flex; flex-direction:column; align-items:center;
+  gap:18px; max-width:800px; margin:0 auto;
+}
+.join-icon{
+  width:42px; height:auto; opacity:.9; animation:bounce 2s ease-in-out infinite; will-change:transform;
+}
+.join-text{
+  color:var(--white); font-size:1.5rem; line-height:1.6; font-weight:400; max-width:760px;
+}
+.join-text span{color:var(--gold); font-weight:700}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ======== SELOS DE SEGURANÇA ABAIXO DO CTA ======== */
+.hero-seals{margin-top:20px; display:flex; justify-content:center; align-items:center}
+.hero-seals img{width:290px; height:auto; opacity:.9; transition:opacity .3s ease}
+.hero-seals img:hover{opacity:1}
+
+/* ======== RESPONSIVO (Mobile) ======== */
+@media (max-width:768px){
+  .hero{
+    min-height:auto; background-image:none; background-color:transparent; padding:0; display:block;
+  }
+  .hero-image-mobile{
+    display:block; width:100%; height:auto; padding-bottom:120%;
+    background-image:url('img/bg-mobile.jpg'); background-size:cover; background-position:center; position:relative;
+  }
+  .hero-logo{
+    display:block; position:relative; max-width:220px; z-index:4;
+    margin-top:-150px; margin-bottom:20px; margin-left:auto; margin-right:auto;
+  }
+  .hero-content{
+    max-width:100%; padding:40px 20px 40px; background-color:var(--black); margin-top:0; position:relative; z-index:3; border-radius:0;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .hero-content .hero-headline{font-size:1.7rem; text-align:center; text-transform:uppercase}
+  .hero-content .hero-description{font-size:.9rem; text-align:center; margin-bottom:30px; max-width:90%}
+  .hero-info{
+    flex-direction:column; align-items:center; gap:5px; padding:8px 12px; margin-bottom:20px;
+  }
+  .cta-button{
+    width:100%; text-align:center; padding:20px 30px; font-size:1rem;
+    box-shadow:0 0 16px rgba(231,169,79,.45);
+  }
+  .hero-seals img{width:280px}
+  .join-text{font-size:1.3rem; line-height:1.5}
+}
+
+/* ======== Desktop refinamentos ======== */
+@media (min-width:769px){
+  .hero-content{display:flex; flex-direction:column; align-items:flex-start; gap:16px}
+  .hero-info{gap:10px; padding:6px 12px}
+  .hero-info + .cta-button{margin-left:0}
+  .hero-info, .cta-button{display:inline-flex; vertical-align:middle}
+}
+
+/* ======== Acessibilidade / desempenho ======== */
+@media (prefers-reduced-motion:reduce){
+  .cta-button::before, .join-icon, .top-bar::before, .top-bar-track{animation:none !important}
+}
+/* 1) Remova o empurrão global do body */
+body{ padding-top: 0 !important; }
+
+/* 2) Empurre apenas quando a TOP BAR realmente existir */
+.top-bar + header.hero{ 
+  margin-top: var(--topbar-h);
+}
+
+/* (opcional) Se houver outro elemento logo após a top-bar, use este seletor genérico: */
+/* .top-bar + * { margin-top: var(--topbar-h); } */
+/* ===== MOBILE: Retângulo arredondado na seção join ===== */
+@media (max-width: 768px) {
+  .join-container {
+    margin-top: 30px; /* espaçamento superior */
+  }
+
+  .join-text {
+    
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 20px auto 0;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.03); /* leve contraste */
+    box-shadow: 0 0 12px rgba(231, 169, 79, 0.05);
+  }
+}
+
+/* ===== SESSÃO DORES (card centralizado; conteúdo à esquerda) ===== */
+.pain-section{
+  background:#000;
+  padding:100px 8%;
+}
+
+.pain-inner{
+  width:100%;
+  max-width:1200px;        /* centraliza a seção como o restante do site */
+  margin:0 auto;           /* >>> resolve alinhamento “puxado” à esquerda */
+}
+
+.pain-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+  border:1px solid var(--gold);
+  border-radius:20px;
+  padding:80px 100px;
+  width:100%;
+  box-shadow:0 0 40px rgba(231,169,79,.1);
+  text-align:left;         /* apenas o conteúdo fica alinhado à esquerda */
+}
+
+.pain-title{
+  font-size:2.4rem;
+  font-weight:800;
+  color:var(--white);
+  margin-bottom:20px;
+}
+
+.pain-desc{
+  color:var(--light-gray);
+  line-height:1.8;
+  font-size:1.3rem;        /* maior, como pediu */
+  margin-bottom:35px;
+}
+
+.pain-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.pain-list li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  color:var(--white);
+  font-size:1.2rem;
+  line-height:1.8;
+}
+
+.pain-icon{
+  width:22px; height:22px; flex:0 0 22px; fill:var(--gold);
+}
+
+/* Frase final fora do card, maior */
+.pain-final{
+  margin-top:46px;
+  color:var(--white);
+  font-size:1.8rem;
+  font-weight:600;
+  line-height:1.6;
+  max-width:950px;
+  text-align:left;         /* mantém alinhado à esquerda */
+}
+.pain-final strong{ color:var(--gold); font-weight:800 }
+
+/* ===== MOBILE ===== */
+@media (max-width:768px){
+  .pain-section{ padding:70px 20px; }
+  .pain-card{ padding:50px 25px; border-radius:16px; }
+  .pain-title{ font-size:1.9rem; }
+  .pain-desc{ font-size:1.35rem; }      /* ainda maior no mobile */
+  .pain-list li{ font-size:1.22rem; line-height:1.9; }
+  .pain-final{ font-size:1.55rem; }
+}
+
